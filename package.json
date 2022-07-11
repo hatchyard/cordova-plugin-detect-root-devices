@@ -1,0 +1,17 @@
+{
+  "name": "cordova-plugin-detect-root-devices",
+  "version": "1.0.0",
+  "description": "This is cordova plugin to detect root devices",
+  "cordova": {
+    "id": "cordova-plugin-detect-root-devices",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "Champika Mendis",
+  "license": "ISC"
+}
