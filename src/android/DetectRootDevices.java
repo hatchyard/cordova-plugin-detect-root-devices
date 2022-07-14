@@ -73,18 +73,18 @@ public class DetectRootDevices extends CordovaPlugin {
                             new OnSuccessListener<SafetyNetApi.AttestationResponse>() {
                                 @Override
                                 public void onSuccess(SafetyNetApi.AttestationResponse response) {
-                                    callbackContext.success(createJsonReponse(STATUS_SUCCESS, response.getJwsResult()));
+                                    callbackContext.success(createJsonResponse(STATUS_SUCCESS, response.getJwsResult()));
                                 }
                             })
                     .addOnFailureListener(activity,
                             new OnFailureListener() {
                                 @Override
                                 public void onFailure(Exception e) {
-                                    callbackContext.success(createJsonReponse(STATUS_FAILURE, e.getLocalizedMessage()));
+                                    callbackContext.success(createJsonResponse(STATUS_FAILURE, e.getLocalizedMessage()));
                                 }
                             });
         } catch (Exception e) {
-            callbackContext.error(createJsonReponse(STATUS_FAILURE, e.getLocalizedMessage()));
+            callbackContext.error(createJsonResponse(STATUS_FAILURE, e.getLocalizedMessage()));
         }
     }
 
@@ -99,7 +99,7 @@ public class DetectRootDevices extends CordovaPlugin {
         }
     }
 
-    private JSONObject createJsonReponse(String status, String response) {
+    private JSONObject createJsonResponse(String status, String response) {
         byte[] responseData = responseDataExtraction(response);
         String decodedResponse = new String(responseData);
 
