@@ -1,5 +1,5 @@
 const exec = require("cordova/exec");
-const SERVICE = "DetectRootDevices"
+const SERVICE = "DetectRootDevices";
 
 const detectRoot = {
   attest: function(api_key, cb, err) {

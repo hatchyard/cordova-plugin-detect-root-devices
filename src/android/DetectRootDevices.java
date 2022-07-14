@@ -66,14 +66,6 @@ public class DetectRootDevices extends CordovaPlugin {
         return byteStream.toByteArray();
     }
 
-    private void sentCallbackResponse(Map<String, String> data, CallbackContext callbackContext) {
-        if (data.containsKey(STATUS_ERROR)) {
-            callbackContext.error(new JSONObject(data));
-        } else {
-            callbackContext.success(new JSONObject(data));
-        }
-    }
-
     private void handleAttestRequest(byte[] nonce, String key, Activity activity, CallbackContext callbackContext) {
         try {
             SafetyNet.getClient(activity).attest(nonce, key)
@@ -99,9 +91,7 @@ public class DetectRootDevices extends CordovaPlugin {
     private byte[] responseDataExtraction(final String jwsResult) {
         final String[] jwsResultParts = jwsResult.split("[.]");
         if (jwsResultParts.length == 3) {
-            final byte[] header = Base64.decode(jwsResultParts[0], Base64.NO_WRAP);
             final byte[] data = Base64.decode(jwsResultParts[1], Base64.NO_WRAP);
-            final byte[] signature = Base64.decode(jwsResultParts[2], Base64.NO_WRAP);
 
             return data;
         } else {
