@@ -2,6 +2,7 @@ package com.example.root;
 
 import android.app.Activity;
 import android.util.Base64;
+import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -61,7 +62,8 @@ public class DetectRootDevices extends CordovaPlugin {
             byteStream.write(bytes);
             byteStream.write(data.getBytes());
         } catch (IOException e) {
-            return null;
+            Log.d("Error", e.getMessage());
+            return new byte[0];
         }
         return byteStream.toByteArray();
     }
@@ -89,17 +91,22 @@ public class DetectRootDevices extends CordovaPlugin {
     }
 
     private byte[] responseDataExtraction(final String jwsResult) {
-        final String[] jwsResultParts = jwsResult.split("[.]");
-        if (jwsResultParts.length == 3) {
-            final byte[] data = Base64.decode(jwsResultParts[1], Base64.NO_WRAP);
-
-            return data;
-        } else {
-            return null;
+        try {
+            if (jwsResult != null) {
+                final String[] jwsResultParts = jwsResult.split("[.]");
+                final byte[] data = Base64.decode(jwsResultParts[1], Base64.NO_WRAP);
+                return data;
+            } else {
+                return new byte[0];
+            }
+        } catch (Exception e) {
+            Log.d("Error:", e.getMessage());
+            return new byte[0];
         }
     }
 
     private JSONObject createJsonResponse(String status, String response) {
+
         byte[] responseData = responseDataExtraction(response);
         String decodedResponse = new String(responseData);
 
